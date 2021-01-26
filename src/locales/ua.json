@@ -1,0 +1,16 @@
+{
+  "ProfileTitle": "Профіль",
+  "Message_EnterName": "Ввeдіть ваше ім'я",
+  "Message_EnterBill": "Ввeдіть pахунок",
+  "Update": "Обновити",
+  "Full name": "Ім'я",
+  "Email": "Емайл",
+  "Menu_Bill": "Рахунок",
+  "Menu_History": "Історія",
+  "Menu_Planning": "Планування",
+  "Menu_NewRecord": "Новий запис",
+  "Menu_Categories": "Категорії",
+  "Menu_Profile": "Профіль",
+  "Register": "Регістрація",
+  "Login": "Ввійти"
+}

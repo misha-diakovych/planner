@@ -1,25 +1,79 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import firebase from 'firebase/app'
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+const router = new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [
+        {
+            path: '/login',
+            name: 'login',
+            meta: {layout: 'empty'},
+            component: () => import('./views/Login.vue')
+        },
+        {
+            path: '/register',
+            name: 'register',
+            meta: {layout: 'empty'},
+            component: () => import('./views/Register.vue')
+        },
+        {
+            path: '/',
+            name: 'home',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/Home.vue')
+        },
+        {
+            path: '/categories',
+            name: 'categories',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/Categories.vue')
+        },
+        {
+            path: '/detail/:id',
+            name: 'detail',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/DetailRecord.vue')
+        },
+        {
+            path: '/history',
+            name: 'history',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/History.vue')
+        },
+        {
+            path: '/planning',
+            name: 'planning',
+            meta: {layout: 'main'},
+            component: () => import('./views/Planning.vue')
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/Profile.vue')
+        },
+        {
+            path: '/record',
+            name: 'record',
+            meta: {layout: 'main', auth: true},
+            component: () => import('./views/Record.vue')
+        },
+    ]
+});
+
+router.beforeEach((to, from, next) => {
+    const currentUser = firebase.auth().currentUser;
+    const requirerAuth = to.matched.some(record => record.meta.auth)
+
+    if (requirerAuth && !currentUser) {
+        next('/login?message=login')
+    } else {
+        next()
     }
-  ]
-})
+});
+
+export default router
